@@ -11,6 +11,7 @@ using std::fstream;
 using std::ios;
 
 /*
+* this code is based on curl-7.19.0/docs/examples/multi-app.c
 *
 * [compile]
 * g++ multi_fetch.cpp -o multi_fetch -I/usr/include -L/usr/lib -lcurl
