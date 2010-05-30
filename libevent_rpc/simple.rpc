@@ -1,0 +1,9 @@
+struct GetUserRequest {
+    string id = 1;
+}
+
+struct GetUserResponse {
+    int errcode = 1;
+    optional string name = 2;
+    optional string email = 3;
+}
