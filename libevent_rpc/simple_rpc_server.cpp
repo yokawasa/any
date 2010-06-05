@@ -62,7 +62,7 @@ GetUserCallback(EVRPC_STRUCT(GetUser)* rpc, void *arg)
     EVTAG_ASSIGN(res, name, "Fooo Baaar");
     EVTAG_ASSIGN(res, email, "baz@foo.bar");
 
-    /* no reply to the RPC */
+    /* send the reply to the RPC */
     EVRPC_REQUEST_DONE(rpc);
 }
 
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     /* register all of the handlers for all RPCs */
     EVRPC_REGISTER(rpc_base, GetUser, GetUserRequest, GetUserResponse, GetUserCallback, NULL);
 
-    /* run the dispather */
+    /* loop and dispatch events */
     event_dispatch();
 
     EVRPC_UNREGISTER(rpc_base, GetUser);

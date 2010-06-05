@@ -67,11 +67,11 @@ exitloop:
 }
 
 static struct evrpc_pool *
- get_rpc_pool(const char *svr_addr, short svr_port)
+ get_rpc_pool(struct event_base *base, const char *svr_addr, short svr_port)
 {
     struct evhttp_connection *ev_conn;
     struct evrpc_pool *rpc_pool;
-    rpc_pool = evrpc_pool_new(NULL);
+    rpc_pool = evrpc_pool_new(base);
     if (!rpc_pool) {
         fprintf(stderr, "failed to get new rpc pool\n");
         return NULL;
@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     /* create a base for the RPC protocol */
     rpc_base = evrpc_init(ev_http);
 
-    rpc_pool = get_rpc_pool(svr_addr, svr_port);
+    rpc_pool = get_rpc_pool(ev_base, svr_addr, svr_port);
     if(!rpc_pool) {
         return -1;
     }
@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
     res = GetUserResponse_new();
     /* set request, response, callback func */
     EVRPC_MAKE_REQUEST(GetUser, rpc_pool, req, res, GetUserCallback, NULL);
-    /* process request and resonse */
+    /* process request and response */
     event_dispatch();
 
     GetUserRequest_free(req);
